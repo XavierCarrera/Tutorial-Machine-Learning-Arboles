@@ -26,7 +26,7 @@ Si tuvieramos un valor *x* = 5 al que quisieramos ubicar, tendríamos solamente 
     
 Para hacer el cálculo, tenemos que usar la fórmula de **Suma de Errores Cuadrados** (SEC) que vimos en [regersión linear](https://github.com/XavierCarrera/Tutorial-Machine-Learning-Regresion-Lineal) que se ve de la siguiente forma:
 
-![suma de errores cuadrados](sec)
+![suma de errores cuadrados](https://github.com/XavierCarrera/Tutorial-Machine-Learning-Arboles/blob/main/img/suma_errores_cuadrados.png?raw=true)
 
 Aca la *f* (**x**) es la función representando nuestro árbol y cada punto está representado por variables predictoras **xi** y una variable resultante *yi*. En este sentido, para producir un buen árbol necesitamos un data set grande con valores resultantes conocidos que será nuestro set de entrenamiento.
 
@@ -60,7 +60,7 @@ Normalmente, dividir el plano nos ayuda a decrecer la SEC. En el ejemplo anterio
 
 La solución clásica a este problema es hacer crecer un árbol extensamente y luego cortar secciones hasta que se ajuste a nuestros deseos. Esto se hace con una función de costo que castiga la inexactitud y la complejidad. Si tomamos *yi* de cada data point y **xi** como la variable predictora, tenemos una *f* (**x**) en un subarbol que predice por *yi* y dentro del cual contiene un divisor *T* que se formularía asi:
 
-![función de cost](asads.as)
+![función de cost](https://github.com/XavierCarrera/Tutorial-Machine-Learning-Arboles/blob/main/img/funcion-costo.png?raw=true)
 
 Aquí, α es un parámetro de tunneo que controla que tanto castigamos la complexidad. Si α fuese al infinito, el número de hojas cortadas serían solo una ya que el costo de divisón se vuelve infinito. Dado que la SEC siempre será finita, el número de divisiones se acercará a 0 y el número de hojas se acercará a 1. 
 
