@@ -1,6 +1,6 @@
 # Tutorial Machine Learning: Árboles
 
-## Árboles de Regresión
+## 1. Árboles de Regresión
 
 En tutoriales pasados hemos visto diferentes formas en las que podemos predecir datos futuros que son desconocidos. Y aunque [regresión lineal](https://github.com/XavierCarrera/Tutorial-Machine-Learning-Regresion-Lineal) y [clasificación lineal](https://github.com/XavierCarrera/Tutorial-Machine-Learning-Clasificacion-Lineal) son poderosos para solucionar ciertos problemas, pueden tener problemas en situaciones muy específicas.
 
@@ -64,10 +64,56 @@ La solución clásica a este problema es hacer crecer un árbol extensamente y l
 
 Aquí, α es un parámetro de tunneo que controla que tanto castigamos la complexidad. Si α fuese al infinito, el número de hojas cortadas serían solo una ya que el costo de divisón se vuelve infinito. Dado que la SEC siempre será finita, el número de divisiones se acercará a 0 y el número de hojas se acercará a 1. 
 
-## Árboles de Clasificación
+## 2. Árboles de Clasificación
 
-## Consideraciones sobre los Árboles de Decisión
+Uno de los usos más comúnes de los árboles de decisión es la clasificación. Esto es algo común, por ejemplo, en las clases de biología donde tenemos la manera en que se clasifican los seres vivos dependiendo del reino al que pertenecen. Estas son simples clasificaciones en donde las ramas se dispersan dependiendo de los observaciones. Por ejemplo:
 
-## Bagging
+![arbol clasificacion](https://ds055uzetaobb.cloudfront.net/brioche/uploads/Y5enq1rj9n-3-2-1.png?width=1500)
 
-## Boosting 
+Así como en los árboles de regresión, los árboles de clasificación están construido con un conjunto de datos. Se usa para decidir que divisiones usar y como clasificar datos en las hojas al terminar el árbol. A cada hoja se le asigna cada punto que termina en cada clase, concentrándose en la clase más común.
+
+Veamos la siguiente clasificación:
+
+![arbol clasificacion](https://ds055uzetaobb.cloudfront.net/brioche/uploads/FHi7WhIa11-sj6potzffz-3-2-3.png?width=1200)
+
+En este caso, tenemos tres categorías: azul, rojo y verde. El punto negro es un data point de clase desconocida. Si tuvieramos que clasificarlo, lo pondríamos dentro de la clase verde porque la mayoría de puntos en esta sección son verdes.
+
+El proceso para crear árboles de clasificación es también recursivo. Empezamos definiendo una métrica que represente la calidad de la hoja en el árbol y seleccionar repetidamente la división que más mejor esta métrica. En este caso, empero, no podemos medir la SEC porque estamos tratando con datos cualitativos. Pero tenemos la alternativa de usar clases *k* a los que se les definen funciones de error *m*. Las funciones *m* más conocidas son:
+
+* Tasa de Error Clasificatorio: la fracción de puntos mal representados.
+* Índice Gini: que varía según el nivel de predicción de cada hoja. 
+* Entropia Cruzada: similar al Índice Gini, sin embargo se enfoca a medir el "ruido" en cada una de las hojas.
+
+Cada una de estas utiliza *Pmk* como la proporción de puntos de clase *k* en una hoja *m*. 
+
+Si utilizacemos la Tasa de Error, podriamos formular una ecuación en donde N1 y N2 representan las hojas finales, mientras que E1 y E2 representan los errores al clasificar:
+
+    (N1 ⋅ E1) + (N2 ⋅ E2) / N1 + N2
+    
+Con esto tendríamos el promedio del peso de errores en contraposición al número de puntos. 
+
+Sin embargo, el Índice Gini y la Entropia Cruzada son más usados para construir ábroles de decisión. Aunque suena contraintuitivo, la tasa de error solo se enfoca en reducir el error en los árboles de decisión. Tenemos que recordar que los árboles de decisión no toman en cuenta lo que sucede más adelante. En cambio, solo buscan solucionar un problema que sucede en el presente. Por ello, al usar el Índice Gini o la Entropía Cruzada aumentamos las posibilidades de crear divisiones que funcionen bien en el futuro.
+
+Una forma de visualizar como el Índice Gini elimina el ruido es con la siguiente gráfica:
+
+![indice gini](https://ds055uzetaobb.cloudfront.net/brioche/uploads/umSezzLgNY-3-2-7.png?width=1200)
+
+Sin necesidad de usar fórmulas podemos ver que la línea azul en el eje *x* fue creada a partir de una tasa de error porque se enfocó a buscar un punto en donde se encontraban la mayoría de puntos rojos y azules. Sin embargo, podemos saber que la línea roja en el eje *y* fue creada con un Índice Gini porque redujo el ruido de todos los puntos azules arriba de *y* = 10.
+
+Al igual que sus pares en regresión, los árboles de clasificación caen fácilmente en overfitting. En esta sección del tuturoial hemos tratado al error de nuestros árboles como la proporción de puntos del data set de entrenamiendo que clasificó mal. Podemos recortar el árbolde varias maneras basado en esta función de error. Algunas soluciones puedes ser 1) añadir el total del número de hojas a la función de error e intentar minimizar la cantidad resultante o 2) cortar individualmente las hojas cuando sea necesario. 
+
+Tomemos el siguiente escenario:
+
+![entropia](https://ds055uzetaobb.cloudfront.net/brioche/uploads/aZICzaLJtX-3-2-8.png?width=1200)
+
+Si quisieramos mezclar algunas de las secciones para evitar overfitting, deberíamos hacerlo con E y F. La razón es que dado que F tiene solo un punto azúl más y al combinarlo con E (que tiene mayormente puntos azules) solo causiaríamos una mala clasificación. La clave es contar la cantidad de puntos azules y rojos que habrían en otras combinaciones.
+
+Pero ¿que sucedería si ignoraramos los datos de entrenamiento y crearamos un árbol arbitrariamente? ¿la tasa de error incrementaría con los datos de entrenamiento? 
+
+Hay que notar que la hoja original solo podrá dar puntos dentro de una clasificación, por lo que los puntos en la mayoría de una clase serán clasificados correctamente. Si tenemos una clase azul (mayoritaria) y otra roja (minoritaria), cada punto crearía dos clases nuevas. Si la hoja tiene más puntos azules que rojos, entonces nada cambia. Cada punto será clasificado correctamente solo si fue clasificado antes correctamente. Sin embargo, si contiene más puntos rojos que azules, entonces lo contrario será cierto. Dado que hay más puntos rojos que azules en cada hoja, el número total será clasificado correctamente con mayor frecuencia. Por tanto, el error se quedará estático o decrecerá. 
+
+## 3. Consideraciones sobre los Árboles de Decisión
+
+## 4. Bagging
+
+## 5. Boosting 
