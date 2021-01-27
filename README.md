@@ -37,6 +37,32 @@ Para construir entonces un árbol tenemos que asumir que la mejor división es a
 En este caso sabemos que la línea azul hace el mejor trabajo reduciendo la SEC por las siguientes razones:
 
 * La línea roja puede ser descartada porque trata de dividir a través de variables resultantes, usando información para tratar de hacer estimaciones lo que lo hace una opción imposible.
+* Tenemos que generar una tabla que tenga promedios a la derecha e izquierda de cada línea en su eje y. Por ejemplo para la línea verde:
+    
+        Valores a la izquierda en y: 8 + 6 + 4 + 2 / 4 = 5
+        Valores a la derecha en y: 10 + 22 / 2 = 11
+        
+Al completar la tabla tenemos los siguientes promedios, sus SEC y la SEC total.
+
+| Valor Divisor | Promedio Izquierda | Promedio Derecha | SEC Izquierda | SEC Derecha | Total |
+| ------------- | ------------- | ------------- | ------------- | ------------- | ------------- | 
+| 2 | 2  | 8  | 0  | 40  | 40  |
+| 6 | 4 | 10  | 8  | 8 | 16  |
+| 8 | 5  | 11  | 20  | 2  | 22  |
+
+De esta manera, vemos que la línea divisora en *x* = 6 es la mejor ya que tiene el menor SEC.
+
+Normalmente, dividir el plano nos ayuda a decrecer la SEC. En el ejemplo anterior podríamos tener hasta cinco divisiones, dado que el máximo de data points son seis. Es decir, siempre el máximo de secciones es la cantidad de datapoints en el eje *x* - 1. Sin embargo, hay que estar conscientes que este enfoque nos puede llevar a overfitting. Si añadimos suficientes hojas a nuestro árbol, podemos reducir el SEC hasta 0. Esta acción tiene efectos detrimentales:
+
+* Se genera un sobreajuste y especialización en los datos de entrenamiento.
+* Los errores en los datos que usamos para generar el árbol darán mucho peso a sus prediccionwa, dado que no hay valores con los cuales promediar.
+* El desempeño con datos nuevos será malo.
+
+La solución clásica a este problema es hacer crecer un árbol extensamente y luego cortar secciones hasta que se ajuste a nuestros deseos. Esto se hace con una función de costo que castiga la inexactitud y la complejidad. Si tomamos *yi* de cada data point y **xi** como la variable predictora, tenemos una *f* (**x**) en un subarbol que predice por *yi* y dentro del cual contiene un divisor *T* que se formularía asi:
+
+![función de cost](asads.as)
+
+Aquí, α es un parámetro de tunneo que controla que tanto castigamos la complexidad. Si α fuese al infinito, el número de hojas cortadas serían solo una ya que el costo de divisón se vuelve infinito. Dado que la SEC siempre será finita, el número de divisiones se acercará a 0 y el número de hojas se acercará a 1. 
 
 ## Árboles de Clasificación
 
