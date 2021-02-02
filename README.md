@@ -114,6 +114,18 @@ Hay que notar que la hoja original solo podrá dar puntos dentro de una clasific
 
 ## 3. Consideraciones sobre los Árboles de Decisión
 
+Una de las grandes ventajas de los árboles de decisión es que son muy visuales en comparación con otros algoritmos de Machine Learning. Esto hace que sean fácil de interpretar. Y aunque los árboles de decisiones no suelen ser los más precisos al hacer predicciones, nos ayuda a encontrar interacciones entre variables dados su nivles de importancia. 
+
+Además, un árbol de decisión funciona bien para casí cualquier problema. Rara vez suele ser la mejor solución, pero se puede usar para casi cualquier problema. 
+
+Otra ventaja es que suele ser una buena solución cuando estamos trabajando con variables cualitativas. Muchos otros algoritmos tienen que ajustarse para lidiar con estos problemas. Mientras tanto, los árboles de decisiones puede trabajar directamente con este tipo de problemas. Con esto podemos evitar hacer suposiciones problemáticas que afecten nuestro modelado como asumir que puede haber un valor numérico que describa diferentes clases. 
+
+Sin embargo y aunque su interpretación es sencilla, existen limitaciones obvias a la hora de utilizar este enfoque. Rara vez podemos encontrar un fenómeno que pueda ser definido en bloques. Es por esta razón que los árboles de decisión no son la mejor opción para hacer predicciones. Un ejemplo es la siguiente imagen en la que es obvio que tenemos dos clases que pueden ser sencillamente divididos por una función linear. Sin embargo, un árbol de decisión tendría muchos problemas para este tipo de tareas.
+
+![Problema arbol decision](https://ds055uzetaobb.cloudfront.net/brioche/uploads/X8198YzjGf-3-3-3.png?width=1200)
+
+Siempre que usemos árboles de decisión, tenemos que recordar que su desempeño con la data de entrenamiento no necesariamente con los datos de la vida real. En especial porque los árboles son especialmente susceptibles a sufrir de sobreajustes. Es por esta razón que para este tipo de algoritmos solemos **dividir la data en entrenamiento y pruebas**. Los datos de entrenamiento sirven justo para lo que su nombre sugiere y con los de prueba evaluamos su desempeño. Debido a que estos son datos que el modelo no ha procesado, podemos saber que también es nuestro árbol de decisiones.
+
 ## 4. Bagging
 
 ## 5. Boosting 
