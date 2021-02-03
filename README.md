@@ -128,4 +128,47 @@ Siempre que usemos árboles de decisión, tenemos que recordar que su desempeño
 
 ## 4. Bagging
 
+Uno de los grandes problemas respecto a los algoritmos basados en árboles es que son bastante inconsistentes. Pequeñas diferencias en nuestros datos de entrenamiento pueden provocar árboles que se ven diametralmente diferentes. Por ende, cuando un árbol es usado para predecir datos que están ligeramente fuera del alcance de los datos usados para entrenarse dará malos resultados y produce variables con alta alteatoridad.
+
+Veamos los siguientes árboles que fueron entrenados con datasets similares y que tuvieron un buen desempeño con los datos en la esquina inferior izquierda. Al mismo tiempo, podemos ver que tuvieron resultados diferentes para el punto en azul. El problema aquí es la varianza que comúnmente afecta a los árboles.
+
+![varianza arbol decision](https://ds055uzetaobb.cloudfront.net/brioche/uploads/UdCjq9juN7-3-4-1.png?width=1200)
+
+Una técninca efectiva para reducir la varianza de un modelo es pasar de usar un simple árbol a usar una multitud de ellos. Con el gran poder de cómputo actual, no necesitamos limitarnos a un solo árbol. Fácilmente podemos generar cientos de ellos de golpe para sacar un promedio que nos dé un resultado final. Al sacar un promedio de tantos árboles, podemos garantizar que cualquier anormalidad en cualquiera de los árboles desaparezca. 
+
+A este método lo conocemos como Agregación de Bootstrap, aunque comúnmente se le llama Bagging. Esta es una de las formas de potenciar los árboles de decisión. Una desventaja de este enfoque, sin embargo, es que pierde interpretabilidad en comparación a un árbol clásico dado que ya no tenemos una cadena de decisiones clara.
+
+Veamos el siguente ejemplo:
+
+![bagging](https://ds055uzetaobb.cloudfront.net/brioche/uploads/BaIFVxzEni-3-4-3-fixed.png?width=1200)
+
+Si queremos tomar una decisión sobre la dulzura promedio de manzana roja simple que pese más de 6 onzas, sabemos que (siguiendo los árboles) el resultado es 0,35. Al seguir los caminos, podemos obtener las siguientes variables:
+
+        Peso < 8 -> roja -> simple: 0.4
+        Roja -> peso > 6 -> simple: 0.23
+        Peso < 12 -> simple -> peso < 8 -> 0.42
+        
+        Dulzura = 0.4 + 0.23 + 0.42 / 3
+                = 0.35
+                
+Para generar todos los árboles, debemos de empezar con nuestros datos de entrenamiento. Ordinalmente, deberíamos usar cada punto de entrenamiento para generar un solo modelo. En este caso, empero, debemos generar varios por lo que necesitamos un enfoque diferente. Esencialmente, necesitamos obtener un dataset nuevo para cada árbol adicional que sea similar a nuestros datos de entrenamiento y al mismo tiempo únicos. De tal forma que generamos un arfol que se ajusta a nuestros datos pero que ciértamente desde cada otro árbol que creamos.
+
+Al hacer bagging, el subconjunto de data points es creado un sampleo aleatorio de nuestro set completo. Si el set completo contiene *N* puntos, entonces tomaremos *N* cantidad de muestras. El sampleo se hace con reemplazos, para que sea psoible para el subconjunto recibir el mismo punto varias veces. Posteriormente, entrenamos todos los sets necesarios y generamos todos los árboles con el mismo algoritmo. Finalmente, se dividen recursivamente las hojas para minimizar métricas.
+
+Por ejemplo, si queremos usar un árbol de regresión linear para predicir las alturas de las personas. Sería una pésima idea dividir muestras por sus pesos (digamos quienes pesan menos de 70 kgs y los que pesan más) ya que generaríamos un promedio que no representa al conjunto de datos. 
+
+Aunque parece que el bagging solo nos sirve para regresiones lineares, también podemos utilizarlo para clasificaciones. En este caso, cada árbol da un voto al predecir y la clasificación se da por el conteo de varios votos dados por varios árboles.
+
+Supongamos que 7 árboles dan estos resultados al querer clasificar animales:
+
+        [Pato   Ganso   Pato    Pichón     Ganso    Ganso   Pichón]
+        
+El resultado en este caso sería Ganso porque es el punto que más se repite en el conjunto.
+
+Por lo general, bagging es más efectivo si los árboles son diferentes. Esto tiene sentido porque si los árboles son muy similares, entonces harán errores similares y al promediar estos errores se verán reflejados. Para amortiguar esto, los árboles deben ser lo más diversos que se pueda.
+
+El bagging puede ser mejorado asegurándonos que los árboles crezcan diferentemente, incluso si usamos data sets similares. Esta mejora es conocida como un random forest y complejiza un poco este algoritmo. Al igual que el bagging, un random forest genera arbitrariamente un número de arranque que usa para crear cada árbol. Sin embargo, el algoritmo de generación de árboles es algo "artificial". Si hay un número predictor de variables *p*, entonces el algoritmo del random forest será inicializar cuando *m < p*.
+
+Al hacer una nueva decisión, el predictor *m* se elige arbitrariamente del set *p* y solo lo divide entre las variables consideradas. Como resultado, no hay variable que domine la construcción de árboles y eso generará el promedio de árboles.
+
 ## 5. Boosting 
