@@ -112,21 +112,7 @@ Pero ¿que sucedería si ignoraramos los datos de entrenamiento y crearamos un �
 
 Hay que notar que la hoja original solo podrá dar puntos dentro de una clasificación, por lo que los puntos en la mayoría de una clase serán clasificados correctamente. Si tenemos una clase azul (mayoritaria) y otra roja (minoritaria), cada punto crearía dos clases nuevas. Si la hoja tiene más puntos azules que rojos, entonces nada cambia. Cada punto será clasificado correctamente solo si fue clasificado antes correctamente. Sin embargo, si contiene más puntos rojos que azules, entonces lo contrario será cierto. Dado que hay más puntos rojos que azules en cada hoja, el número total será clasificado correctamente con mayor frecuencia. Por tanto, el error se quedará estático o decrecerá. 
 
-## 3. Consideraciones sobre los Árboles de Decisión
-
-Una de las grandes ventajas de los árboles de decisión es que son muy visuales en comparación con otros algoritmos de Machine Learning. Esto hace que sean fácil de interpretar. Y aunque los árboles de decisiones no suelen ser los más precisos al hacer predicciones, nos ayuda a encontrar interacciones entre variables dados su nivles de importancia. 
-
-Además, un árbol de decisión funciona bien para casí cualquier problema. Rara vez suele ser la mejor solución, pero se puede usar para casi cualquier problema. 
-
-Otra ventaja es que suele ser una buena solución cuando estamos trabajando con variables cualitativas. Muchos otros algoritmos tienen que ajustarse para lidiar con estos problemas. Mientras tanto, los árboles de decisiones puede trabajar directamente con este tipo de problemas. Con esto podemos evitar hacer suposiciones problemáticas que afecten nuestro modelado como asumir que puede haber un valor numérico que describa diferentes clases. 
-
-Sin embargo y aunque su interpretación es sencilla, existen limitaciones obvias a la hora de utilizar este enfoque. Rara vez podemos encontrar un fenómeno que pueda ser definido en bloques. Es por esta razón que los árboles de decisión no son la mejor opción para hacer predicciones. Un ejemplo es la siguiente imagen en la que es obvio que tenemos dos clases que pueden ser sencillamente divididos por una función linear. Sin embargo, un árbol de decisión tendría muchos problemas para este tipo de tareas.
-
-![Problema arbol decision](https://ds055uzetaobb.cloudfront.net/brioche/uploads/X8198YzjGf-3-3-3.png?width=1200)
-
-Siempre que usemos árboles de decisión, tenemos que recordar que su desempeño con la data de entrenamiento no necesariamente con los datos de la vida real. En especial porque los árboles son especialmente susceptibles a sufrir de sobreajustes. Es por esta razón que para este tipo de algoritmos solemos **dividir la data en entrenamiento y pruebas**. Los datos de entrenamiento sirven justo para lo que su nombre sugiere y con los de prueba evaluamos su desempeño. Debido a que estos son datos que el modelo no ha procesado, podemos saber que también es nuestro árbol de decisiones.
-
-## 4. Bagging
+## 3. Bagging
 
 Uno de los grandes problemas respecto a los algoritmos basados en árboles es que son bastante inconsistentes. Pequeñas diferencias en nuestros datos de entrenamiento pueden provocar árboles que se ven diametralmente diferentes. Por ende, cuando un árbol es usado para predecir datos que están ligeramente fuera del alcance de los datos usados para entrenarse dará malos resultados y produce variables con alta alteatoridad.
 
@@ -171,4 +157,69 @@ El bagging puede ser mejorado asegurándonos que los árboles crezcan diferentem
 
 Al hacer una nueva decisión, el predictor *m* se elige arbitrariamente del set *p* y solo lo divide entre las variables consideradas. Como resultado, no hay variable que domine la construcción de árboles y eso generará el promedio de árboles.
 
-## 5. Boosting 
+## 4. Boosting 
+
+Una alternativa al bagging es diseñar deliberadamente los árboles y que se complementan para cubrir las deficiencias de los otros. Es decir, no solo creamos árboles que no solo se ajustan a los puntos originales sino a los errores de estos. A esto lo conocemos como Boosting.
+
+Para esto, los árboles son incializados con los valores *-B*, *d* y λ, el número de árboles deseados, el número de divisiones en cada árbol y los pesos de cada árbol. Aquí asumimos que tenemos un gran data set con un número *n* de muestras de entrenamiento **x1**, **x2**, ... **xn** y un set correspondiente de variables de respuesta **y1**, **y2**, **yn**.
+
+Finalmente, tenemos que inicializar *f*f como *f*(**x**= = 0.
+
+Por 1 ≤ b ≤ B: 
+
+* Creamos un conjunto de residuales *r1*, *r2*,...c *rn* con *ri* = *yi* - *f(**xi**).
+* Ajustamos el árbol *f^b* a los residuales, parando después de un número *d* de separaciones. Ajustamos *f* a *f* = *f* + λ *f*^b.
+
+La función resultante sería:
+
+![funcion boosting](asdasdas.as)
+
+A continuación dibujamos el primer ábol *fb* para generar el proceso de boosting. En el gŕafico describimos el data set que hemos generado de él, con la variable predictora representada por el eje *x* y el resultado representado en el eje *y*.
+
+Empezamos nuestra función predictiva que es cero en todas partes. Basado en el primer árbol, nuestra nueva función predictora es:
+
+    f(x) = 0 + λf^b(x)
+    
+Si λ = 0.1 y siendo que el residual es el valor del punto que es usado en el árbol próximo ¿cual sería el residual del punto azul? 
+
+![arbol boosting](https://ds055uzetaobb.cloudfront.net/brioche/uploads/au0PePdRHo-3-5-3b.png?width=1200)
+
+![x y boosting](https://ds055uzetaobb.cloudfront.net/brioche/uploads/ZmInrMQvB9-3-5-3.png?width=1200)
+
+Para encontrar el residual del punto azul, debemos encontrar la predicción hecha por el primer árbol y luego sustraer esto del valor del punto azul después de pesarlo por λ.
+
+Aquí, la estimación del árbol es 15 por lo que el valor de la función de la primera predicción en el punto azul es 0 + 0.1 ⋅ 15 = 1.5. Al sustraerlo del valor del punto azul da 13.5 para el residual ya que:
+
+        15 - 1.5 = 13.5
+
+La función del algoritmo de boosting es el resultado de la suma de muchos errores, cada uno teniendo un peso por alguna constante λ. El valor de λ va de 0 a 1 y representa que tanta influencia un simple árbol debería de tener en el estimado final del modelo. Si es muy pequeño, la predicción de un solo árbol *f^b(x)* tendrá poco impacto en el resultado final. 
+
+Si tenemos que λ decrece. podemos entonces saber que el número *B* de árboles incrementa porque el resultado de cada árbol se multiplica por λ y después se añade al total de cada predicción. Por tanto y si λ es extremadamente pequeño, muchos árboles serán necesitados para alcanzar los número que queremos para predecir.
+
+Con todo esto podríamos asumir que los algoritmos de boosting tienen una SEC menor al compararse con bagging. Sin embargo y en etapas tempranas, el boosting se desempeñará peor que el bagging porque la suma de los pesos de los árboles es mucho menor que los valores estimados. Esto es especialmente cierto si λ es un número menor y la SEC será mayor en etapas tempranas.
+
+Aunque puede ser tentador utilizar boosting como una bala de plata, también tenemos que tener el sobreajuste en cuenta. Si tenemos un data set con números erroneos, es importante entonces tener un modelo que se resista a ser sobreajustado. Si se moldea demasiado a los datos que tenemos a la mano, dará mucho peso a valores que están obviamente equivocados.
+
+Por tanto, el mejor modelo para este tipo de situaciones es bagging. Y aunque Boosting tiende a sobreajustarse rápidamente, es capaz de ajustarse bien a medida que tenemos más árboles. En comparación, bagging no escala tanto y su desempeño no mejorará a medida que incrementemos más árboles.
+
+En el caso de las clasificaciones, el proceso es algo similar. Al iniciar el proceso, a cada data point se le da un peso que es una medida de cuan importante es para el árbol que estamos construyendo. A medida que construimos el árbol, los puntos que están siendo clasificados incorrectamente se les dan pesos grandes para enfocarse en ellos aún más.
+
+Finalmente, todos los árboles votan en la clase de los puntos nuevos de la misma manera que en bagging. En el siguiente ejemplo enseñados datos usados para entrenar el primero y segundo árbol en el algoritmo de boosting. Además, se enseñan las lineas divisorias en cada uno de los pasos. Hay dos clases de puntos (rojo y azul) y el tamaño de un punto indica su importancia en un el árbol en donde se está construyendo.
+
+![division boosting](https://ds055uzetaobb.cloudfront.net/brioche/uploads/S4K4CT0hYW-3-5-7.png?width=1200)
+
+![division boosting](https://ds055uzetaobb.cloudfront.net/brioche/uploads/PdVtBFQMJ9-3-5-7b.png?width=1200)
+
+## Consideraciones sobre los Árboles de Decisión
+
+Una de las grandes ventajas de los árboles de decisión es que son muy visuales en comparación con otros algoritmos de Machine Learning. Esto hace que sean fácil de interpretar. Y aunque los árboles de decisiones no suelen ser los más precisos al hacer predicciones, nos ayuda a encontrar interacciones entre variables dados su nivles de importancia. 
+
+Además, un árbol de decisión funciona bien para casí cualquier problema. Rara vez suele ser la mejor solución, pero se puede usar para casi cualquier problema. 
+
+Otra ventaja es que suele ser una buena solución cuando estamos trabajando con variables cualitativas. Muchos otros algoritmos tienen que ajustarse para lidiar con estos problemas. Mientras tanto, los árboles de decisiones puede trabajar directamente con este tipo de problemas. Con esto podemos evitar hacer suposiciones problemáticas que afecten nuestro modelado como asumir que puede haber un valor numérico que describa diferentes clases. 
+
+Sin embargo y aunque su interpretación es sencilla, existen limitaciones obvias a la hora de utilizar este enfoque. Rara vez podemos encontrar un fenómeno que pueda ser definido en bloques. Es por esta razón que los árboles de decisión no son la mejor opción para hacer predicciones. Un ejemplo es la siguiente imagen en la que es obvio que tenemos dos clases que pueden ser sencillamente divididos por una función linear. Sin embargo, un árbol de decisión tendría muchos problemas para este tipo de tareas.
+
+![Problema arbol decision](https://ds055uzetaobb.cloudfront.net/brioche/uploads/X8198YzjGf-3-3-3.png?width=1200)
+
+Siempre que usemos árboles de decisión, tenemos que recordar que su desempeño con la data de entrenamiento no necesariamente con los datos de la vida real. En especial porque los árboles son especialmente susceptibles a sufrir de sobreajustes. Es por esta razón que para este tipo de algoritmos solemos **dividir la data en entrenamiento y pruebas**. Los datos de entrenamiento sirven justo para lo que su nombre sugiere y con los de prueba evaluamos su desempeño. Debido a que estos son datos que el modelo no ha procesado, podemos saber que también es nuestro árbol de decisiones.
