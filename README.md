@@ -172,7 +172,7 @@ Por 1 ≤ b ≤ B:
 
 La función resultante sería:
 
-![funcion boosting](asdasdas.as)
+![funcion boosting](https://github.com/XavierCarrera/Tutorial-Machine-Learning-Arboles/blob/main/img/funcion_boosting.png?raw=true)
 
 A continuación dibujamos el primer ábol *fb* para generar el proceso de boosting. En el gŕafico describimos el data set que hemos generado de él, con la variable predictora representada por el eje *x* y el resultado representado en el eje *y*.
 
