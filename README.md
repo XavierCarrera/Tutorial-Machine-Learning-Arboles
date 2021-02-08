@@ -1,5 +1,13 @@
 # Tutorial Machine Learning: Árboles
 
+En otros apuntes, hemos visto algoritmos que son poderosos para predecir valores desconocidos. Sin embargo, son de difícil visualización. Una de las técnicas clásicas para atender este problema son los árboles de decisión, el cual es uno de los enfoques clásicos en Machine Learning. 
+
+En este apunte encontrarás la explicación teorica y matemática de los árboles de decisión. En los apuntes, pasamos al código para ilustrar los temas cubiertos acá. Para este propósito usamos los data sets de Iris y Pingüinos que pertenecen a la librería Seaborn.
+
+Si tienes alguna pregunta, no dudes en contactarme en Twitter: @XaviGrowth
+
+Nota 1: La notación para vectores es en negritas. Es decir, podrás identificar a los vectores cuando aparezcan de la siguiente manera: y.
+
 ## 1. Árboles de Regresión
 
 En tutoriales pasados hemos visto diferentes formas en las que podemos predecir datos futuros que son desconocidos. Y aunque [regresión lineal](https://github.com/XavierCarrera/Tutorial-Machine-Learning-Regresion-Lineal) y [clasificación lineal](https://github.com/XavierCarrera/Tutorial-Machine-Learning-Clasificacion-Lineal) son poderosos para solucionar ciertos problemas, pueden tener problemas en situaciones muy específicas.
