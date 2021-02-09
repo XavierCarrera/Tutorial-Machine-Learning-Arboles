@@ -6,7 +6,7 @@ En este apunte encontrarás la explicación teorica y matemática de los árbole
 
 Si tienes alguna pregunta, no dudes en contactarme en Twitter: @XaviGrowth
 
-Nota 1: La notación para vectores es en negritas. Es decir, podrás identificar a los vectores cuando aparezcan de la siguiente manera: y.
+Nota 1: La notación para vectores es en negritas. Es decir, podrás identificar a los vectores cuando aparezcan de la siguiente manera: **y**.
 
 ## 1. Árboles de Regresión
 
