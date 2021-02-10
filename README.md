@@ -2,7 +2,7 @@
 
 En otros apuntes, hemos visto algoritmos que son poderosos para predecir valores desconocidos. Sin embargo, son de difícil visualización. Una de las técnicas clásicas para atender este problema son los árboles de decisión, el cual es uno de los enfoques clásicos en Machine Learning. 
 
-En este apunte encontrarás la explicación teorica y matemática de los árboles de decisión. En los apuntes, pasamos al código para ilustrar los temas cubiertos acá. Para este propósito usamos los data sets de Iris y Pingüinos que pertenecen a la librería Seaborn.
+En este apunte encontrarás la explicación teorica y matemática de los árboles de decisión. En los apuntes, pasamos al código para ilustrar los temas cubiertos acá. Para este propósito usamos los data sets de [Fish Market](https://www.kaggle.com/aungpyaeap/fish-market).
 
 Si tienes alguna pregunta, no dudes en contactarme en Twitter: @XaviGrowth
 
