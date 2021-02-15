@@ -2,7 +2,7 @@
 
 En otros apuntes, hemos visto algoritmos que son poderosos para predecir valores desconocidos. Sin embargo, son de difícil visualización. Una de las técnicas clásicas para atender este problema son los árboles de decisión, el cual es uno de los enfoques clásicos en Machine Learning. 
 
-En este apunte encontrarás la explicación teorica y matemática de los árboles de decisión. En los apuntes, pasamos al código para ilustrar los temas cubiertos acá. Para este propósito usamos los data sets de [Fish Market](https://www.kaggle.com/aungpyaeap/fish-market) y [Car features](https://www.kaggle.com/CooperUnion/cardataset?select=data.csv).
+En este apunte encontrarás la explicación teorica y matemática de los árboles de decisión. En los apuntes, pasamos al código para ilustrar los temas cubiertos acá. Para este propósito usamos el data set [Fish Market](https://www.kaggle.com/aungpyaeap/fish-market).
 
 A diferencia de tutoriales pasados, en los últimos dos apuntes comparamos a Bagging y Boosting. Como veremos, son algoritmos que nos ayudan a potenciar a los árboles de decisión y generar una solución más robusta. 
 
